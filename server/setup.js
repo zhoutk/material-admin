@@ -18,27 +18,11 @@ module.exports = function (options) {
   }
 
   // serve the static assets
-  app.use("/_assets", express.static(path.join(__dirname, "..", "build", "public"), {
-    maxAge: "200d" // We can cache them as they include hashes
-  }));
-  app.use("/", express.static(path.join(__dirname, "..", "public"), {
-  }));
-
-  app.get("/*", function(req, res) {
-    renderer.render(
-      req.path,
-      function(err, html) {
-        if(err) {
-          res.statusCode = 500;
-          res.contentType = "text; charset=utf8";
-          res.end(err.message);
-          return;
-        }
-        res.contentType = "text/html; charset=utf8";
-        res.end(html);
-      }
-    );
-  });
+  // app.use("/_assets", express.static(path.join(__dirname, "..", "build", "public"), {
+  //   maxAge: "200d" // We can cache them as they include hashes
+  // }));
+  // app.use("/", express.static(path.join(__dirname, "..", "public"), {
+  // }));
 
   const server = http.createServer(app);
 

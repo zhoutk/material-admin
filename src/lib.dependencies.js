@@ -2,6 +2,7 @@
 
 const lib = [
     "axios",
+    "history",
     "react",
     "react-dom",
     "react-redux",
@@ -9,6 +10,9 @@ const lib = [
     "react-router-redux",
     "redux",
     "redux-actions",
+    "redux-saga",
+    "redux-seamless-immutable",
+    "seamless-immutable",
     "uuid"
 ];
 

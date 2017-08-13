@@ -86,7 +86,6 @@ const config = {
         modules: [path.resolve(__dirname, 'node_modules')],
         extensions: ['.js', '.scss', '.sass', '.json'],
         alias: {
-            util: path.resolve(__dirname, 'src/js/util/util'),
         }
     }
 };

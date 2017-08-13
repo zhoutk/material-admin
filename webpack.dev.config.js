@@ -1,29 +1,28 @@
 const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const webpackBaseConf = require('./webpack.base.config');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const lib = require('./src/lib.dependencies');
 
-module.exports = {
+const devConfig = webpackMerge(webpackBaseConf,{
     devtool: 'cheap-module-eval-source-map',
-    entry: [
-        'webpack-hot-middleware/client?reload=true',
-        path.join(process.cwd(), 'src/index.js'),
-    ],
+    entry: {
+        hot:'webpack-hot-middleware/client?reload=true',
+        main:path.join(process.cwd(), 'src/index.js'),
+        vendors:lib
+    },
     output: {
         path: path.join(__dirname, 'build'),
-        filename: 'bundle.js',
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].chunk.js',
         publicPath: '/',
     },
     module: {
-        loaders: [
-            // take all less files, compile them, and bundle them in with our js bundle
+        rules: [
             {
-                test: /\.less$/,
-                loader: 'style!css!autoprefixer?browsers=last 2 version!less'
-            },{
-                test: /\.json$/,
-                loader: "json",
-            },{
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
@@ -47,6 +46,16 @@ module.exports = {
                 NODE_ENV: JSON.stringify('development')
             },
         }),
+        new ExtractTextPlugin({
+            filename: '[name].css',
+            disable: false,
+            allChunks: true
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendors',
+            filename: 'vendors.js',
+            minChunks: Infinity
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new HtmlWebpackPlugin({
@@ -54,10 +63,12 @@ module.exports = {
             templateContent: templateContent(),
         })
     ],
-};
+});
 
 function templateContent() {
     return fs.readFileSync(
         path.resolve(process.cwd(), 'src/index.html')
     ).toString();
 }
+
+module.exports = devConfig;

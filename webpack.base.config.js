@@ -46,7 +46,7 @@ const config = {
                         }
                     },
                         {
-                            loader: 'autoprefixer-loader',
+                            loader: 'postcss-loader',
                             options:{
                                 browsers:'last 2 version'
                             }

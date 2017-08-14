@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import {render} from 'react-dom';
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import App from './containers/App';
-import Home from './components/Home';
-import Stuff from './components/Stuff';
-import Contact from './components/Contact';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import Login from './components/auth/Login';
+import DefaultLayout from './components/layout/Layout';
 import {store, history} from "./store"
 import './index.css';
 
 render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <App>
-                <Route exact path="/" component={Home} />
-                <Route path="/stuff" component={Stuff} />
-                <Route path="/contact" component={Contact} />
-            </App>
+            <div>
+                <Switch>
+                    <Route exact path="/login" render={({ location }) => createElement(Login, {
+                    })} />
+                    <Route path="/" render={() => createElement(DefaultLayout, {
+                        title:"Usual admin",
+                    })} />
+                </Switch>
+            </div>
         </ConnectedRouter>
     </Provider>,
     document.getElementById('root')

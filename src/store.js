@@ -1,5 +1,5 @@
 import { stateTransformer } from 'redux-seamless-immutable'
-import { createStore, applyMiddleware,compose, combineReducers } from 'redux'
+import { createStore, applyMiddleware,compose } from 'redux'
 import { createLogger } from 'redux-logger'
 import { routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';

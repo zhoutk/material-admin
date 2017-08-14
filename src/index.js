@@ -10,6 +10,7 @@ import { Route } from 'react-router-dom';
 import {store, history} from "./store"
 import './index.css';
 
+console.log(JSON.stringify(store.getState()));
 render(
     <Provider store={store}>
         <ConnectedRouter history={history}>
